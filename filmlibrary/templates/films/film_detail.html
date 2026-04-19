@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{film.title}}{% endblock %}
+{% block content %}
+{% load thumbnail %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col">
+            {% thumbnail film.image "700x700" as im %}
+            <img src="{{im.url}}">
+            {% endthumbnail %}
+        </div>
+        <div class="col">
+            <h1>{{film.title}}</h1>
+            <div style="font-size: 20px">
+                Год выпуска: {{film.release_date|date:'Y'}}<br>
+                Рейтинг: {{film.rating}}<br>
+                Жанр: {% for g in film.genre.all %} {{g.title}} {% endfor %}<br>
+                <p>{{film.description}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="py-5">
+        <h3>Отзывы и рецензии</h3>
+        <p style="font-size : 20px">Всего отзывов {{ reviews_count }}</p>
+        <p style="font-size : 20px">Средний балл рейтинга {{ avg_rating }}</p>
+        <div style="border: solid black 1px; border-radius: 15px;padding: 10px">
+            <form method="post" action="{% url 'film:add_review' film.id %}">
+                {% csrf_token %}
+                <div class="form-group row my-3 p-3">
+                    <h5>Оставить отзыв</h5>
+                    {% for field in form %}
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {% if field.field.help_text %}
+                        <span class="text-muted">
+                            {{ field.field.help_text }}
+                        </span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn" style="background-color: #8A5E20; color: white">Отправить</button>
+            </form>
+        </div>
+        <div class="py-3">
+            {% for review in reviews.all %}
+            <div class="container" style="border: solid black 1px; border-radius: 10px; padding: 15px">
+                <h6>{{ review.username }}</h6>
+                <span><b>Рейтинг {{ review.star }}</b></span>
+                <p>{{ review.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

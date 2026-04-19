@@ -1,0 +1,19 @@
+{% extends "base.html"%}
+{% block title %}СписокЖанров{% endblock %}
+{% block content %}
+{% load thumbnail %}
+<div class="container py-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {%  for genre in genre %}
+        <div class="col">
+            <div class="card h-100 text-center">
+                {% thumbnail genre.image "500x900" crop="center" as im %}
+                <img src="{{im.url}}" class="card-img-top">
+                {% endthumbnail %}
+                <a href="{% url 'film:genre_detail' genre.title %}"><h5 class="card-title">{{ genre.title }}</h5></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

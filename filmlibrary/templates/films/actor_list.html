@@ -1,0 +1,20 @@
+{% extends "base.html"%}
+{% block title %}СписокАктёров{% endblock %}
+{% block content %}
+{% load thumbnail %}
+<div class="container py-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {%  for actor in actors %}
+        <div class="col">
+            <div class="card h-100 text-center">
+                {% thumbnail actor.image "500x900" crop="center" as im %}
+                <img src="{{im.url}}" class="card-img-top">
+                {% endthumbnail %}
+                <a href="{% url 'film:actors_detail' actor.id %}"><h5 class="card-title">{{ actor.name }}</h5></a>
+                <p class="card-text">{{ actor.lastname}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

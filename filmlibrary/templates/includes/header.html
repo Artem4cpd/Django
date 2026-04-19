@@ -1,0 +1,12 @@
+<header>
+  <nav class="navbar" style="background-color: #ffad3b">
+    <div class="container-flud">
+      <a class="navbar-brand" href="{% url 'film:main_menu' %}"><span style="color:#614216;font-size:24px">Каталог Фильмов</span></a>
+      <div style="display: flex; margin-left: 20px">
+        <a class="navbar-link" href="{% url 'film:genre_list' %}" style="color: #614216;font-size:24px;padding:10px">Все жанры</a>
+        <a class="navbar-link" href="{% url 'film:actors_list' %}" style="color: #614216;font-size:24px;padding:10px">Все актёры</a>
+        <a class="navbar-link" href="{% url 'film:about_us' %}" style="color: #614216;font-size:24px;padding:10px">О нас</a>
+      </div>
+    </div>
+  </nav>
+</header>
